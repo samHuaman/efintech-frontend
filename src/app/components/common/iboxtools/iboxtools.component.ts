@@ -19,7 +19,6 @@ export class IboxtoolsComponent {
       ibox.resize();
       ibox.find('[id^=map-]').resize();
     }, 50);
-
   }
 
   public close(e):void {
