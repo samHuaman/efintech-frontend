@@ -1,0 +1,74 @@
+<div class="col-lg-12">
+    <form name="maintenanceForm" #form="ngForm" class="m-t" role="form" novalidate [formGroup]="EditForm">
+        <div class="form-horizontal">
+            <div class="scroll">
+                <div class="col-lg-12">
+                    <div *ngFor="let alert of alerts">
+                        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" dismissible="true"><span [innerHtml]="alert.msg"></span></alert>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Descripción</label>
+                    <div class="col-md-9">
+                        <input class="form-control" type="text" placeholder="Descripción" name="description"
+                            [formControl]="EditForm.controls['Description']" [(ngModel)]="Product.description">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Descripción Reducida</label>
+                    <div class="col-md-9">
+                        <input class="form-control" type="text" placeholder="Descripción Reducida" name="short_description"
+                            [formControl]="EditForm.controls['ShortDescription']" [(ngModel)]="Product.short_description">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tipo de Producto</label>
+                    <div class="col-md-9">
+                        <select2 [data]="ProductTypes" [options]="ProductTypesOptions" [value]="Product.productType?.type_id"
+                            (valueChanged)="onProductTypeChange($event)">
+                        </select2>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Moneda Principal</label>
+                    <div class="col-md-9">
+                        <select2 [data]="Currencies" [options]="CurrenciesOptionsPrincipal" [value]="Product.principalCurrency?.currency_id"
+                            (valueChanged)="onPrincipalCurrencyChange($event)">
+                        </select2>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Moneda Secundaria</label>
+                    <div class="col-md-9">
+                        <select2 [data]="Currencies" [options]="CurrenciesOptionsSecundary" [value]="Product.secundaryCurrency?.currency_id"
+                            (valueChanged)="onSecundaryCurrencyChange($event)">
+                        </select2>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Planes Asociados</label>
+                    <div class="col-md-9">
+                        <select2 [data]="Plans" [options]="PlansOptions" (valueChanged)="onChangePlans($event)" [value]="MultiSelect">
+                        </select2>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Inicio de Vigencia</label>
+                    <div class="col-md-9">
+                        <my-date-picker name="validity_start" [options]="DatePickerOptions" [placeholder]="'Inicio de Vigencia'" 
+                            [formControl]="EditForm.controls['ValidityStart']" [(ngModel)]="StartDPModel" (dateChanged)="onValidityStartChange($event)">
+                        </my-date-picker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Fin de Vigencia</label>
+                    <div class="col-md-9">
+                        <my-date-picker name="validity_end" [options]="DatePickerOptions" [placeholder]="'Fin de Vigencia'" 
+                            [formControl]="EditForm.controls['ValidityEnd']" [(ngModel)]="EndDPModel" (dateChanged)="onValidityEndChange($event)">
+                        </my-date-picker>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

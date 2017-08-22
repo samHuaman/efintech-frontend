@@ -1,0 +1,25 @@
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name">IN+</h1>
+        </div>
+        <h3>Welcome to IN+</h3>
+        <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+        </p>
+        <p>Login in. To see it in action.</p>
+        <form name="loginForm" #form="ngForm" class="m-t" role="form" (ngSubmit)="postLogin()">
+            <p class="text-danger">{{loginerror}}</p>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Username" 
+                    [formControl]="loginForm.controls['Username']" [(ngModel)]="Username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password"
+                    [formControl]="loginForm.controls['Password']" [(ngModel)]="Password">
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b" [disabled]="!loginForm.valid">Login</button>
+            <a class="btn btn-sm btn-white btn-block" href="#" [routerLink]="['/changepassword']">Change password</a>
+        </form>
+        <p class="m-t"><small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small></p>
+    </div>
+</div>

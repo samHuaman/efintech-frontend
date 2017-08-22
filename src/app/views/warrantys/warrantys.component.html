@@ -1,0 +1,106 @@
+<div class="col-lg-12">
+    <iboxindex #ibox>
+        <div class="custom-ibox-tools">
+            <my-dropdown *ngIf="ShowDropdown==true">
+                <ul class="dropdown-menu dropdown-menu-right dopdown-list">
+                    <li>
+                        <a (click)="_data_warranty=true">Ver Detalles</a>
+                    </li>
+                </ul>
+            </my-dropdown>
+            <!-- <a>
+                <i class="fa fa-plus"></i>
+            </a> -->
+            <!-- <a>
+                <i class="fa fa-filter"></i>
+            </a> -->
+            <a (click)="dt.onReload(); ShowDropdown=false">
+                <i class="fa fa-refresh"></i>
+            </a>
+        </div>
+    </iboxindex>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Tipo de Cliente</label>
+                <div class="form-group">
+                    <label class="control-label" style="font-weight: normal !important">{{_warrantyClient?.client?.personType?.description}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Cliente</label>
+                <div class="form-group">
+                    <label class="control-label" style="font-weight: normal !important">{{_fullName}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Total Tasado</label>
+                <div class="form-group" *ngIf="_data_warranty==false">
+                    <label class="control-label" style="font-weight: normal !important">{{_montoTotal}}</label>
+                </div>
+                <div class="form-group" *ngIf="_data_warranty==true">
+                    <label class="control-label" style="font-weight: normal !important">{{_monto}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" *ngIf="_data_warranty==true">
+            <div class="form-group">
+                <label>Tipo de Garantía</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.warranty_type_id.ddescription}}</label>
+                    <select2 [data]="_warrantysTypes" [value]="_warrantyDetail.warranty_type_id.warranty_type_id" [options]="_warrantysTypesOptions" *ngIf="_edit_data==true"
+                        (valueChanged)="onWarrantyTypeChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.ddescription}}</label>
+                    <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_warrantyDetail.ddescription" name="ddescription">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.aaddress}}</label>
+                    <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_warrantyDetail.aaddress" name="aaddress">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" *ngIf="_data_warranty==true">
+            <div class="form-group">
+                <label>Tipo de Activo</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.assest_type_id.ddescription}}</label>
+                    <select2 [data]="_assestsTypes" [value]="_warrantyDetail.assest_type_id.assest_type_id" [options]="_assestsTypesOptions" *ngIf="_edit_data==true"
+                        (valueChanged)="onAssestsTypeChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Nro. Registros Publicos</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.public_record_number}}</label>
+                    <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_warrantyDetail.public_record_number" name="public_record_number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Monto Tasado</label>
+                <div class="form-group">
+                    <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_warrantyDetail?.amount_assessed}}</label>
+                    <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_warrantyDetail.amount_assessed" name="amount_assessed">
+                </div>
+                <!-- <button class="btn btn-primary" *ngIf="_edit_data==false" (click)="_edit_data=true">Editar</button> -->
+                <button class="btn btn-white pull-right" *ngIf="_edit_data==false" (click)="_data_warranty=false;">Ocultar</button>
+
+                <button class="btn btn-primary" *ngIf="_edit_data==true" (click)="_edit_data=false; warrantyDetailSave();">Guardar</button>
+                <button class="btn btn-white" *ngIf="_edit_data==true" (click)="_edit_data=false">Cancelar</button>
+            </div>
+        </div>        
+        <div [ngClass]="(_data_warranty==false)?'col-sm-9':'col-sm-12'" class="col-sm-12" style="position: relative">
+            <mydatatables-ajax #dt [url]="_warrantyURL" [columns]="_warrantyCoulumns" (key)="onShowDropdown($event)">
+            </mydatatables-ajax>
+        </div>
+    </div>
+</div>

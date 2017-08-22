@@ -1,0 +1,505 @@
+<div class="col-lg-12">
+    <div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" dismissible="true"><span [innerHtml]="alert.msg"></span></alert>
+    </div>
+</div>
+
+<div class="col-sm-6 b-r">
+    <h3 class="m-t-none m-b">Datos Básicos</h3>
+    <form name="EditBasicDataForm" #form="ngForm" class="m-t" role="form" novalidate [formGroup]="EditBasicDataForm">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3">Código de Cliente</label>
+                <div class="col-md-9">
+                    <label class="control-label" style="font-weight: normal !important">
+                        {{Client.client_id}}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Persona</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.personType?.description}}
+                    </label>
+                    <select2 [data]="PersonTypes" [value]="Client.personType?.type_id" [options]="PersonTypesOptions" ngDefaultControl
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onPersonTypesChange($event)" name="PersonType">
+                    </select2>
+                    <!-- <input class="form-control" type="text" placeholder="Tipo de Persona" name="person_type"
+                        *ngIf="SN_Edit_Basic_Data==<t></t>rue"> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Documento</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.documentType?.description}}
+                    </label>
+                    <select2 [data]="DocumentTypes" [value]="Client.documentType?.type_id" [options]="DocumentTypesOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onDocumentTypesChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Número de Documento</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.document_number}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Número de Documento" name="document_number" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['DocumentNumber']" [(ngModel)]="Client.document_number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Magnitud</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.magnitude?.description}}
+                    </label>
+                    <select2 [data]="Magnitudes" [value]="Client.magnitude?.magnitude_id" [options]="MagnitudesOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onMagnitudesChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">RUC</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.taxpayer_id_number}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="RUC" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['TIN']" [(ngModel)]="Client.taxpayer_id_number" name="tin">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Actividad Económica</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.economicActivity?.description}}
+                    </label>
+                    <select2 [data]="EconomicActivities" [value]="Client.economicActivity?.activity_id" [options]="EconomicActivitiesOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onActivitiesChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Razón Social</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.business_name}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Razón Social" name="business_name" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['BusinessName']" [(ngModel)]="Client.business_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Primer Nombre</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.firstname}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Primer Nombre" name="firstname" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['Firstname']" [(ngModel)]="Client.firstname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Segundo Nombre</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.secondname}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Segundo Nombre"  name="secondname" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['Secondname']" [(ngModel)]="Client.secondname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Apellido Paterno</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.lastname_a}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Apellido Paterno" name="lastname_a" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['LastnameA']" [(ngModel)]="Client.lastname_a">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Apellido Materno</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.lastname_b}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Apellido Materno" name="lastname_b" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['LastnameB']" [(ngModel)]="Client.lastname_b">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Apellido de Casada</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.married_surname}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Apellido de Casada" name="married_surname" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['MarriedSurname']" [(ngModel)]="Client.married_surname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Sexo</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.gender?.description}}
+                    </label>
+                    <select2 [data]="Genders" [value]="Client.gender?.gender_id" [options]="GenderOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onGendersChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Fecha Nacimiento</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.birthdate?.formatted}}
+                    </label>
+                    <my-date-picker name="birthdate" [options]="MyDatePickerOptions" [placeholder]="'Fecha Nacimiento'" *ngIf="SN_Edit_Basic_Data==true"
+                        [formControl]="EditBasicDataForm.controls['Birthdate']" [(ngModel)]="Client.birthdate" (dateChanged)="onBirthdateChanged($event)">
+                    </my-date-picker>
+                    <!-- <input class="form-control" type="text" placeholder="Fecha Nacimiento" name="birthdate"
+                        [(ngModel)]="Client.birthdate.formatted" *ngIf="SN_Edit_Basic_Data==true"> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Nacionalidad</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.nationality?.description}}
+                    </label>
+                    <select2 [value]="Client.nationality?.country_id" [options]="NationalitiesOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onNationalitiesChange($event)" id="nationality">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">País de Residencia</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.residence_country?.description}}
+                    </label>
+                    <select2 [value]="Client.residence_country?.country_id" [options]="ResidenceCountriesOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onResidenceCountriesChange($event)"  id="residence_country">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Estado Civil</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.civilStatus?.description}}
+                    </label>
+                    <select2 [data]="CivilStatus" [value]="Client.civilStatus?.status_id" [options]="CivilStatusOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onCivilStatusChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Situación Laboral</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Basic_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{Client.employmentSituation?.description}}
+                    </label>
+                    <select2 [data]="EmploymentSituations" [value]="Client.employmentSituation?.situation_id" [options]="EmploymentSituationsOptions"
+                        *ngIf="SN_Edit_Basic_Data==true" (valueChanged)="onEmploymentSituationsChange($event)">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Protección de Datos</label>
+                <div class="col-md-9">
+                    <label class="control-label">
+                        <input type="checkbox" [checked]="Client.data_protection_act" class="js-switch" 
+                            [disabled]="SN_Edit_Basic_Data==false" (change)="onActChange($event)"> <!-- (change)="saveUsername = !saveUsername" -->
+                    </label>
+                    <!-- <input class="form-control" type="text" placeholder="Protección de Datos" name="data_protection_act"> -->
+                </div>
+            </div>
+            <div class="row col-lg-12" style="padding: 5px">
+                <div class="form-group pull-right">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="SN_Edit_Basic_Data=true" 
+                                *ngIf="SN_Edit_Basic_Data==false">
+                            Editar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" *ngIf="SN_Edit_Basic_Data==true"
+                                [disabled]="!EditBasicDataForm.valid" [ladda]="Progress" (click)="startLoading(); postBasicData()">
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-white btn-sm" 
+                                (click)="getClientData(); SN_Edit_Basic_Data=false" *ngIf="SN_Edit_Basic_Data==true">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-sm-6">
+    <h3 class="m-t-none m-b">Datos de Domicilio</h3>
+    <form name="EditAddressForm" #formAddress="ngForm" class="m-t" role="form" novalidate [formGroup]="EditAddressForm">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Dirección</label>
+                <div class="col-md-9">
+                    <select2 [data]="AddressTypes" [value]="AddressStartValue" 
+                        [options]="AddressTypesOptions" (valueChanged)="onAddressTypeChange($event)">
+                    </select2>
+                    <!-- <input class="form-control" type="text" placeholder="Tipo de Dirección" name="address_type"> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Vivienda</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.housingType?.description}}
+                    </label>
+                    <select2 [data]="HousingTypes" [value]="ClientAddress.housingType?.type_id" [options]="HousingTypesOptions" 
+                        (valueChanged)="onHousingTypeChange($event)" *ngIf="SN_Edit_Address_Data==true">
+                    </select2>
+                    <!-- <input class="form-control" type="text" placeholder="Tipo de Vivienda" name="housing_type"
+                        *ngIf="SN_Edit_Address_Data==true"> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Zona</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.zoneType?.description}}
+                    </label>
+                    <select2 [data]="ZoneTypes" [value]="ClientAddress.zoneType?.type_id" [options]="ZoneTypesOptions" 
+                        (valueChanged)="onZoneTypeChange($event)" *ngIf="SN_Edit_Address_Data==true">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Nombre de Zona</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.zone_name}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Nombre de Zona" name="zone_name" *ngIf="SN_Edit_Address_Data==true"
+                        [formControl]="EditAddressForm.controls['ZoneName']" [(ngModel)]="ClientAddress.zone_name">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="form-group">
+                    <label class="control-label col-md-5">Manzana</label>
+                    <div class="col-md-7" style="padding-left: 10px; padding-right: 0px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.block}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="Manzana" name="block" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['Block']" [(ngModel)]="ClientAddress.block">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" style="padding-right: 0px">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Lote</label>
+                    <div class="col-md-9" style="padding-left: 10px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.lot}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="Lote" name="lot" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['Lot']" [(ngModel)]="ClientAddress.lot">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Vía</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.roadType?.description}}
+                    </label>
+                    <select2 [data]="RoadTypes" [value]="ClientAddress.roadType?.type_id" [options]="RoadTypesOptions" 
+                        (valueChanged)="onRoadTypeChange($event)" *ngIf="SN_Edit_Address_Data==true">
+                    </select2>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="form-group">
+                    <label class="control-label col-md-5">Nombre</label>
+                    <div class="col-md-7" style="padding-left: 10px; padding-right: 0px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.road_name}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="Nombre de Vía" name="road_name" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['RoadName']" [(ngModel)]="ClientAddress.road_name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" style="padding-right: 0px">
+                <div class="form-group">
+                    <label class="control-label col-md-3">N°</label>
+                    <div class="col-md-9" style="padding-left: 10px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.road_number}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="N° de Vía" name="road_number" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['RoadNumber']" [(ngModel)]="ClientAddress.road_number">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Agrupación</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.groupType?.description}}
+                    </label>
+                    <select2 [data]="GroupTypes" [value]="ClientAddress.groupType?.group_type_id" [options]="GroupTypesOptions" 
+                        (valueChanged)="onGroupTypeChange($event)" *ngIf="SN_Edit_Address_Data==true">
+                    </select2>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="form-group">
+                    <label class="control-label col-md-5">Nombre</label>
+                    <div class="col-md-7" style="padding-left: 10px; padding-right: 0px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.group_name}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="Nombre Agrupación" name="group_name" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['GroupName']" [(ngModel)]="ClientAddress.group_name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" style="padding-right: 0px">
+                <div class="form-group">
+                    <label class="control-label col-md-3">N°</label>
+                    <div class="col-md-9" style="padding-left: 10px">
+                        <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                            {{ClientAddress?.group_number}}
+                        </label>
+                        <input class="form-control" type="text" placeholder="N° de Agrupación" name="group_number" *ngIf="SN_Edit_Address_Data==true"
+                            [formControl]="EditAddressForm.controls['GroupNumber']" [(ngModel)]="ClientAddress.group_number">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Tipo de Sector</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.sectorType?.description}}
+                    </label>
+                    <select2 [data]="SectorTypes" [value]="ClientAddress.sectorType?.type_id" [options]="SectorTypesOptions" 
+                        (valueChanged)="onSectorTypeChange($event)" *ngIf="SN_Edit_Address_Data==true">
+                    </select2>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Nombre de Sector</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.sector_name}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Nombre de Sector" name="sector_name" *ngIf="SN_Edit_Address_Data==true"
+                        [formControl]="EditAddressForm.controls['SectorName']" [(ngModel)]="ClientAddress.sector_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Referencia</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.reference}}
+                    </label>
+                    <textarea class="form-control" placeholder="Referencia..." name="reference" *ngIf="SN_Edit_Address_Data==true"
+                        [formControl]="EditAddressForm.controls['Reference']" rows="2" cols="25" [(ngModel)]="ClientAddress.reference"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Ubigeo</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Address_Data==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientAddress?.strUbigeo}}
+                    </label>
+                    <select2 [value]="ClientAddress.ubigeo?.ubigeo_id" [options]="UbigeosOptions" 
+                        (valueChanged)="onUbigeoChange($event)" *ngIf="SN_Edit_Address_Data==true" id="ubigeo">
+                    </select2>
+                </div>
+            </div>
+            <div class="row col-lg-12" style="padding: 0px 5px 0px 5px">
+                <div class="form-group pull-right" style="margin-bottom: 0px">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="enbaleEditAddress()"
+                                *ngIf="SN_Edit_Address_Data==false">
+                            Editar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" *ngIf="SN_Edit_Address_Data==true"
+                                [disabled]="!EditAddressForm.valid" [ladda]="Progress" (click)="postAddressData(); startLoading()">
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-white btn-sm" 
+                                (click)="onAddressTypeChange({value: ClientAddress.addressType.type_id}); SN_Edit_Address_Data=false" *ngIf="SN_Edit_Address_Data==true">
+                            Cancelar
+                        </button>                                 
+                    </div>
+                </div>
+            </div>
+            <div class="row col-lg-12" style="padding-left: 20px">
+                <div class="form-group" style="margin-bottom: 0px">
+                    <hr style="border-top: 1px solid  #e7eaec">
+                </div>
+            </div>
+        </div>
+    </form>
+    <h3 class="m-t-none m-b">Datos de Contacto</h3>
+    <form name="EditContactForm" #formContact="ngForm" class="m-t" role="form" novalidate [formGroup]="EditContactForm">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3">Correo Electrónico</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Contact_Info==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientContactInfo?.email}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Correo Electrónico" name="email" *ngIf="SN_Edit_Contact_Info==true"
+                        [formControl]="EditContactForm.controls['Email']" [(ngModel)]="ClientContactInfo.email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Teléfono Fijo</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Contact_Info==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientContactInfo?.home_phone}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Teléfono Fijo" name="home_phone" *ngIf="SN_Edit_Contact_Info==true"
+                        [formControl]="EditContactForm.controls['Homephone']" [(ngModel)]="ClientContactInfo.home_phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Teléfono Celular</label>
+                <div class="col-md-9">
+                    <label *ngIf="SN_Edit_Contact_Info==false" class="control-label" style="font-weight: normal !important">
+                        {{ClientContactInfo?.cellphone}}
+                    </label>
+                    <input class="form-control" type="text" placeholder="Teléfono Celular" name="cellphone" *ngIf="SN_Edit_Contact_Info==true"
+                        [formControl]="EditContactForm.controls['Cellphone']" [(ngModel)]="ClientContactInfo.cellphone">
+                </div>
+            </div>
+            <div class="row col-lg-12" style="padding: 0px 5px 0px 5px">
+                <div class="form-group pull-right" style="margin-bottom: 0px">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="SN_Edit_Contact_Info=true"
+                                 *ngIf="SN_Edit_Contact_Info==false">
+                            Editar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" *ngIf="SN_Edit_Contact_Info==true"
+                                [disabled]="!EditContactForm.valid" [ladda]="Progress" (click)="startLoading(); postContactData()">
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-white btn-sm" 
+                                (click)="getClientContactInfoData(); SN_Edit_Contact_Info=false" *ngIf="SN_Edit_Contact_Info==true">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

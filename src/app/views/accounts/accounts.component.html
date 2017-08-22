@@ -1,0 +1,214 @@
+<div class="col-lg-12">
+  <iboxindex #ibox>
+    <div class="custom-ibox-tools">
+      <my-dropdown *ngIf="ShowDropdown==true">
+        <ul class="dropdown-menu dropdown-menu-right dopdown-list">
+          <li>
+            <a (click)="onShow(); _data_account=true">Ver Detalles</a>
+          </li>
+          <!-- <li>
+            <a (click)="_data_account=true; _accountSelected.account_id; ShowDropdown=false">Ver Estado de Cuenta</a>
+          </li> -->
+        </ul> 
+      </my-dropdown>
+      <a class="close-link">
+          <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+      </a>
+    </div>
+  </iboxindex>
+  <div class="row">
+    <div class="col-lg-12" style="position: relative">
+      <mydatatables-ajax #dt [url]="_accountsURL" [filter]="filter" [columns]="_accountColumns" (key)="onShowDropdown($event)">                  
+      </mydatatables-ajax>
+      <div class="hr-line-dashed" *ngIf="_data_account==true"></div>
+    </div>
+    <div class="account_data">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>Tipo de Cliente</label>
+          <div class="form-group">
+            <label class="control-label" style="font-weight: normal !important">{{_accountDetail?.client_id?.personType?.description}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cliente</label>
+          <div class="form-group">
+            <label class="control-label" style="font-weight: normal !important">{{_FullName}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Saldo</label>
+          <div class="form-group">
+            <label class="control-label" style="font-weight: normal !important">{{_accountDetail?.amount}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Cuenta</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.aaccount}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.aaccount" name="aaccount">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Producto</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.product_id?.description}}</label>
+            <select2 [data]="_Products" [value]="_accountDetail.product_id?.product_id" [options]="_ProductsOptions"
+                  *ngIf="_edit_data==true" (valueChanged)="onProductsChange($event)">
+            </select2>
+            <!-- <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.product_id" name="product_id"> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Sub Producto</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.sub_product_id?.description}}</label>
+            <select2 [data]="_SubProducts" [value]="_accountDetail.sub_product_id?.sub_product_id" [options]="_SubProductsOptions"
+                  *ngIf="_edit_data==true" (valueChanged)="onProductsChange($event)">
+            </select2>
+            <!-- <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.sub_product_id" name="sub_product_id"> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Fecha de Desembolso</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.disbur_date?.formatted}}</label>
+            <my-date-picker *ngIf="_edit_data==true" [options]="myDatePickerOptions" [placeholder]="_datePlaceholder" [(ngModel)]="_accountDetail.disbur_date" name="disbur_date" 
+            (dateChanged)="onDateChanged($event)">
+            </my-date-picker>
+            <!-- <input type="date" class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.disbur_date" name="disbur_date"> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Moneda</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.currency_TYPE_ID?.description}}</label>
+            <select2 [data]="_Currencys" [value]="_accountDetail.currency_TYPE_ID?.currency_id" [options]="_CurrencysOptions"
+                  *ngIf="_edit_data==true" (valueChanged)="onCurrencyChange($event)">
+            </select2>
+            <!-- <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.currency_TYPE_ID" name="currency_TYPE_ID"> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Importe Solicitado</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.amount_requested}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.amount_requested" name="amount_requested">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Periodicidad de Pago</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.payment_priority}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.payment_priority" name="payment_priority">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Número de Cuotas</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.number_quotas}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.number_quotas" name="number_quotas">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Día de Pago</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.payday}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.payday" name="payday">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Duración total</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.total_length}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.total_length" name="total_length">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tasa de Interés Moratorio</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.interest_rate_mora}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.interest_rate_mora" name="interest_rate_mora">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>T. Int. C. Efectiva Anual (TEA)</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.an_effe_compe_inte_rate}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.an_effe_compe_inte_rate" name="an_effe_compe_inte_rate">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Total Interés Compensatorio</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.tota_compe_inte}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.tota_compe_inte" name="tota_compe_inte">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Comisión por Gastos Operativos</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.comm_for_oper_expen}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.comm_for_oper_expen" name="comm_for_oper_expen">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Seguro Desgravamen</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.insurance}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.insurance" name="insurance">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Deuda Total</label>
+          <div class="form-group">
+            <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{_accountDetail?.total_debt}}</label>
+            <input class="form-control" *ngIf="_edit_data==true" [(ngModel)]="_accountDetail.total_debt" name="total_debt">
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- <button class="btn btn-primary" *ngIf="_edit_data==false" (click)="_edit_data=true">Editar</button> -->
+          <button class="btn btn-white pull-right" *ngIf="_edit_data==false" (click)="onHide(); _data_account=false">Ocultar</button>
+
+          <button class="btn btn-primary" *ngIf="_edit_data==true" (click)="_edit_data=false; accountDetailSave();">Guardar</button>
+          <button class="btn btn-white" *ngIf="_edit_data==true" (click)="_edit_data=false">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="hr-line-dashed" *ngIf="_data_account==true"></div>
+      <div class="col-sm-6">
+        <div class="form-group">
+            <label>Cuotas Pendientes</label>
+            <div class="form-group">
+              <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{total_fees}}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Total Seguros</label>
+            <div class="form-group">
+              <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{sum_amount_insurance}}</label>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+            <label>Total Interés Moratorios</label>
+            <div class="form-group">
+              <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{sum_amount_arrears}}</label>
+            </div>
+          </div>
+          <div class="form-group">
+              <label>Total Interés Compensatorio</label>
+              <div class="form-group">
+                <label *ngIf="_edit_data==false" class="control-label" style="font-weight: normal !important">{{sum_amount_compensatory}}</label>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

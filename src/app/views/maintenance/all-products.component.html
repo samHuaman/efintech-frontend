@@ -1,0 +1,28 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Producto y Sub producto</h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="col-md-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <tabset>
+                        <tab heading="Productos" (select)="onSelectTab(1)">
+                            <div class="row">
+                                <products *ngIf="Tabs==1"></products>
+                            </div>
+                        </tab>
+                        <tab heading="Sub Productos" (select)="onSelectTab(2)">
+                            <div class="row">
+                                <sub-products *ngIf="Tabs==2"></sub-products>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

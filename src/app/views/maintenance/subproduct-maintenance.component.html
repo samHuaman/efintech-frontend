@@ -1,0 +1,51 @@
+<div class="col-lg-12">
+        <form name="maintenanceForm" #form="ngForm" class="m-t" role="form" novalidate [formGroup]="EditForm">
+            <div class="form-horizontal">
+                <div class="scroll">
+                    <div class="col-lg-12">
+                        <div *ngFor="let alert of alerts">
+                            <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" dismissible="true"><span [innerHtml]="alert.msg"></span></alert>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Descripción</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" placeholder="Descripción" name="description"
+                                [formControl]="EditForm.controls['Description']" [(ngModel)]="SubProduct.description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Descripción Reducida</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" placeholder="Descripción Reducida" name="short_description"
+                                [formControl]="EditForm.controls['ShortDescription']" [(ngModel)]="SubProduct.short_description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Producto</label>
+                        <div class="col-md-9">
+                            <select2 id="product" [value]="SubProduct.product?.product_id" [options]="ProductOptions" 
+                                (valueChanged)="onProductsChange($event)">
+                            </select2>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Inicio de Vigencia</label>
+                        <div class="col-md-9">
+                            <my-date-picker name="validity_start" [options]="DatePickerOptions" [placeholder]="'Inicio de Vigencia'" 
+                                [formControl]="EditForm.controls['ValidityStart']" [(ngModel)]="StartDPModel" (dateChanged)="onValidityStartChange($event)">
+                            </my-date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Fin de Vigencia</label>
+                        <div class="col-md-9">
+                            <my-date-picker name="validity_end" [options]="DatePickerOptions" [placeholder]="'Fin de Vigencia'" 
+                                [formControl]="EditForm.controls['ValidityEnd']" [(ngModel)]="EndDPModel" (dateChanged)="onValidityEndChange($event)">
+                            </my-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>

@@ -1,0 +1,18 @@
+<div class="form-group">
+    <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="resetResult=='SUCCESS' && selectedValue==1">User enabled</div>
+        <div class="alert alert-success" *ngIf="resetResult=='SUCCESS' && selectedValue==0">User disabled</div>
+        <div class="alert alert-danger" *ngIf="resetResult=='ERROR'">Error</div>
+        <div class="alert alert-warning" *ngIf="resetResult=='WARNING'">You should write a reason</div>
+    </div>
+    <div class="col-md-12">
+        <label>Acción</label>
+        <select [(ngModel)]="selectedValue" class="form-control m-b" [disabled]="true">
+            <option *ngFor="let a of actions" value={{a.valor}}>{{a.name}}</option>
+        </select>
+    </div>
+    <div class="col-md-12">
+        <label>Motivo</label>
+        <textarea class="form-control" [(ngModel)]="comment"></textarea>
+    </div>
+</div>

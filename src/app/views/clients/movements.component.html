@@ -1,0 +1,19 @@
+<div class="col-lg-12">
+    <iboxindex #ibox>
+        <div class="custom-ibox-tools">
+            <a class="close-link">
+                <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+            </a>
+        </div>
+    </iboxindex>
+    <div id="payment-filter" class="form-filter">
+        <form id="filterForm" autocomplete="off">           
+        </form>
+    </div>
+    <div class="row">
+    <div class="col-lg-12" style="position: relative">
+        <mydatatables-ajax #dt [url]="url" [filter]="filter" [columns]="columns">                  
+        </mydatatables-ajax>
+    </div>
+    </div>
+</div>

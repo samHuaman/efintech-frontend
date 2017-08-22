@@ -1,0 +1,38 @@
+<div class="col-lg-12">
+    <div class="row col-lg-12 pull-left">
+        <a class="btn btn-primary" (click)="openModal(template)">Historial de cronogramas</a>
+    </div>
+</div>
+<div class="col-lg-12">
+    <iboxindex #ibox>
+        <div class="custom-ibox-tools">
+            <a class="close-link">
+                <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+            </a>
+        </div>
+    </iboxindex>
+    <div class="row">
+        <div class="col-lg-12" style="position: relative">
+            <mydatatables-ajax #dt [url]="url" [filter]="filter" [columns]="columns">                  
+            </mydatatables-ajax>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Historial de Cronogramas</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <schedule-history [accountId]="accountId"></schedule-history>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Cerrar</button>
+    </div>
+</ng-template>

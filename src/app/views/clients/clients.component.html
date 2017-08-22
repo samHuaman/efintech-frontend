@@ -1,0 +1,56 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Cliente</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>Clientes</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <iboxindex #ibox>
+            <div class="custom-ibox-tools"> 
+              <my-dropdown *ngIf="ShowDropdown==true">
+                <ul class="dropdown-menu dropdown-menu-right dopdown-list">
+                  <li>
+                    <a [routerLink]="['/clientes/cliente', ClientSelected.client_id]">Ver Detalles</a>
+                  </li>
+                </ul> 
+              </my-dropdown>         
+              <a>
+                <i class="fa fa-plus"></i>
+              </a>
+              <a class="filter" (click)="ibox.colapseFilter($event)">
+                <i class="fa fa-filter"></i>
+              </a>
+              <a class="close-link">
+                <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+              </a>
+            </div>
+          </iboxindex>
+        </div>
+        <div class="ibox-content">
+          <div id="client-filter" class="form-filter">
+            <form id="filterForm" autocomplete="off">
+              <div class="row">               
+              </div>
+            </form>
+            <div class="hr-line-dashed"></div>
+          </div>   
+          <div class="row">
+            <div class="col-lg-12" style="position: relative">
+              <mydatatables-ajax #dt [url]="url" [filter]="filter" [columns]="columns" (key)="onShowDropdown($event)">                  
+              </mydatatables-ajax>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header" style="padding-bottom: 25px; padding-top: 25px;">
+        <div class="profile-element" dropdown>
+          <img alt="image" class="img-circle" 
+            [src]="imageUrl" style="width: 50px; margin-left: 25px">
+          <a dropdownToggle>
+            <span class="block m-t-xs"> <strong class="font-bold">{{Nombres}}</strong> </span>
+            <span class="text-muted text-xs block">{{Username}} <b class="caret"></b> </span>
+          </a>
+          <ul class="animated fadeInRight dropdown-menu" *dropdownMenu>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Contacts</a></li>
+            <li><a href="#">Mailbox</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+          IN+
+        </div>
+      </li>
+      <li *ngFor="let option of menuItems">
+        <a *ngIf="option.parent==null" href="#">
+          <i [attr.class]="[option.icon]"></i> 
+          <span class="nav-label">{{option.description}}</span>
+          <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level collapse">
+          <li *ngFor="let secondOption of menuItems">
+            <a *ngIf="secondOption.parent==option.id" href="#" [routerLink]="[secondOption.url]">
+              <span class="nav-label">{{secondOption.description}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>      
+    </ul>
+  </div>
+</nav>

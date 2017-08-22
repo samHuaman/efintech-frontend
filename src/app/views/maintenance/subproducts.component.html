@@ -1,0 +1,50 @@
+<div class="col-lg-12">
+    <iboxindex #ibox>
+        <div class="custom-ibox-tools">
+            <my-dropdown *ngIf="ShowDropdown==true">
+                <ul class="dropdown-menu dropdown-menu-right dopdown-list">
+                    <li>
+                        <a (click)="openModal(template); SN_Create=false; SN_Data_Saved = false">Editar</a>
+                    </li>
+                </ul> 
+            </my-dropdown>
+            <a (click)="openModal(template); SN_Create=true; SN_Data_Saved = false">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a class="filter" (click)="ibox.colapseFilter($event)">
+                <i class="fa fa-filter"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+            </a>
+        </div>
+    </iboxindex>
+    <div class="row">
+    <div class="col-lg-12" style="position: relative">
+        <mydatatables-ajax #dt [url]="url" [filter]="filter" [columns]="columns" (key)="onShowDropdown($event)">                  
+        </mydatatables-ajax>
+    </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" *ngIf="SN_Create==true">Crear Sub Producto</h4>
+        <h4 class="modal-title pull-left" *ngIf="SN_Create==false">Editar Sub Producto</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <subproduct-maintenance [subProductId]="SubProductSelected.sub_product_id" [snCreate]="SN_Create"
+                (dataSaved)="onDataSaved($event); dt.onReload()" #subproduct>
+            </subproduct-maintenance>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="SN_Data_Saved==true" 
+            (click)="subproduct.post()">Guardar</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Cerrar</button>
+    </div>
+</ng-template>

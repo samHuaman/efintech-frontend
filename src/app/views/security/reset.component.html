@@ -1,0 +1,23 @@
+<div class="form-group">
+    <div class="alert alert-success" *ngIf="resetResult=='SUCCESS'">Password reseted</div>
+    <div class="alert alert-danger" *ngIf="resetResult=='ERROR'">Error</div>
+    <div class="alert alert-warning" *ngIf="resetResult=='WARNING'">You must generate the password</div>
+
+    <label class="control-label col-md-2">Contrase&ntilde;a</label>
+    <div class="col-md-10">        
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Password" 
+                readonly="readonly" [(ngModel)]="Password"/>                
+            <div class="input-group-btn">
+                <button *ngIf="resetResult!='SUCCESS'" id="generate" type="button" class="btn btn-primary" 
+                    data-placement="left" title="Generate password" (click)="onGenerate()">
+                    <i class="fa fa-random"></i>
+                </button>
+                <button *ngIf="resetResult=='SUCCESS'" id="generate" type="button" class="btn btn-white" 
+                    data-placement="left" title="Copy to clipboard" (click)="copyToClipboard()">
+                    <i class="fa fa-clone"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

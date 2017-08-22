@@ -1,0 +1,37 @@
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name">IN+</h1>
+        </div>
+        <h3>Change Password</h3>
+        <form  name="changeForm" #form="ngForm" class="m-t" role="form" (ngSubmit)="postChange()">
+            <div class="alert alert-success" *ngIf="ResponsePost=='SUCCESS'">Password changed</div>
+            <div class="alert alert-warning" *ngIf="ResponsePost=='WARNING'">Wrong current password</div>
+
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Username"
+                    [formControl]="changeForm.controls['Username']" [(ngModel)]="Username" [readonly]="ResponsePost=='SUCCESS'">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Current Password"
+                    [formControl]="changeForm.controls['OldPassword']" [(ngModel)]="OldPassword" [readonly]="ResponsePost=='SUCCESS'">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="New Password"
+                    [formControl]="changeForm.controls['NewPassword']" [(ngModel)]="NewPassword" [readonly]="ResponsePost=='SUCCESS'">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Confirm Password"
+                    [formControl]="changeForm.controls['ConfirmPassword']" [(ngModel)]="ConfirmPassword" [readonly]="ResponsePost=='SUCCESS'">
+            </div>
+
+            <div class="alert alert-danger" *ngIf="changeForm.controls.ConfirmPassword.errors?.MatchPassword">Password not match</div>
+
+            <button type="submit" class="btn btn-primary block full-width m-b" 
+                    [disabled]="!changeForm.valid || ResponsePost=='SUCCESS'">Change</button>
+
+            <a class="btn btn-sm btn-white btn-block" href="#" [routerLink]="['/login']">Login</a>
+        </form>
+        <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+    </div>
+</div>
