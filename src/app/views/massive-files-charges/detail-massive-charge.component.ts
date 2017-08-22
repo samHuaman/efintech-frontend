@@ -75,7 +75,7 @@ export class DetailMassiveChargeComponent implements OnInit {
     private post() {
         if (this.fileReader.result) {
             this._http.postFileWithCredentials('http://localhost:8080/massive-charge/postFile',
-                    ['type_id', this.FileType], this.file)
+                    ['type_alias', this.FileType], this.file)
                 .subscribe(
                     data => {
                         let res = JSON.parse(data);
@@ -129,7 +129,7 @@ export class DetailMassiveChargeComponent implements OnInit {
                     
                     _data.forEach(obj => {
                         let _obj = {
-                            id: obj.type_id,
+                            id: obj.alias,
                             text: obj.description
                         };
 
