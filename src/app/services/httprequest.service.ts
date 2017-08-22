@@ -145,7 +145,7 @@ export class HttpRequestService {
 
     unauthorised() {
         this.http
-        .get('http://lh.com:8080/logout', { withCredentials: true })
+        .get('http://localhost.com:8080/logout', { withCredentials: true })
         .subscribe(data => {
                 localStorage.removeItem('currentUser');
                 this.router.navigate(['/login']);

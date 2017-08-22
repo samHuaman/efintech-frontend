@@ -56,7 +56,7 @@ export class ChangePasswordComponent implements OnDestroy, OnInit {
 
         let response: string;
 
-        return this._httpRequestService.postWithCredentials('http://lh.com:8080/user/changePassword', data)
+        return this._httpRequestService.postWithCredentials('http://localhost.com:8080/user/changePassword', data)
                 .subscribe(data => {
                     this.ResponsePost = data._body;
 

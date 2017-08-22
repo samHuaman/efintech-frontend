@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       data.append('username', this.Username);
       data.append('password', this.Password);
 
-      return this.http.post('http://lh.com:8080/login', data, { withCredentials: true })
+      return this.http.post('http://localhost.com:8080/login', data, { withCredentials: true })
               .catch(err => {
                 if (err.status === 401) {
                   this.loginerror = 'Contraseña incorrecta';

@@ -47,7 +47,7 @@ export class ResetPasswordComponent implements OnChanges {
             _data.append('username', this.username);
             _data.append('password', this.Password);
 
-            this._httpRequestService.postWithCredentials('http://lh.com:8080/user/resetPassword', _data)
+            this._httpRequestService.postWithCredentials('http://localhost.com:8080/user/resetPassword', _data)
                 .subscribe(data => {
                     this.resetResult = data._body;
                 },

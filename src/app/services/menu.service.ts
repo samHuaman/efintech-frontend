@@ -13,7 +13,7 @@ export class MenuService {
     getMenu(): Array<Option> {
         let menuItems: Array<Option> = [];
 
-         this._httpRequestService.getWithCredentials('http://lh.com:8080/user/getMenu.json')
+         this._httpRequestService.getWithCredentials('http://localhost.com:8080/user/getMenu.json')
             .subscribe(
               data => {
                 let myArray: any[] = [];

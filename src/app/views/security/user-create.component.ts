@@ -184,7 +184,7 @@ export class UserCreateComponent implements OnInit {
             data.append('enabled', this._user.Enabled ? '1' : '0');
 
 
-            this._httpRequestService.postWithCredentials('http://lh.com:8080/user/saveUser', data)
+            this._httpRequestService.postWithCredentials('http://localhost.com:8080/user/saveUser', data)
                 .subscribe(
                 _data => {
                     console.log(_data._body);
