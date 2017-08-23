@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from "@angular/http";
 import { IMyDpOptions, IMyDateModel } from 'mydatepicker';
+import { Select2OptionData } from 'ng2-select2';
 
 import { FlotChartDirective } from '../../components/charts/flotChart';
 
@@ -47,6 +48,9 @@ export class UserCreateComponent implements OnInit {
     ResponsePost: string;
     ResponseEnable: string;
     ResponseImage: string = '';
+
+    Roles: Array<Select2OptionData> = [];
+    RolesOptions: Select2Options;
 
     createForm: FormGroup;
 
@@ -132,19 +136,20 @@ export class UserCreateComponent implements OnInit {
         console.log(this.isCreate());
 
         this.createForm = this.formBuilder.group({
-            'Username': [null, Validators.required],
+            'Username': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
             'Firstname': [null, Validators.required],
             'Lastname': [null, null],
             'ExpireDate': [null, null],
             'Email': [null, Validators.compose([Validators.required, Validators.email])],
             'ConfirmEmail': [null, this.isCreate() ? Validators.compose([Validators.required, Validators.email]) : null],
             'DaysEnabled': [null, Validators.required],
-            'Password': [null, this.isCreate() ? Validators.required : null],
-            'Enabled': [null, null]
+            'Password': [null, this.isCreate() ? Validators.required : null]
         },
         {
             validator: this.isCreate() ? EmailValidation.MatchEmail : null
         });
+
+        this.getRolesData();
     }
 
     onDateChanged(event: IMyDateModel) {
@@ -181,7 +186,6 @@ export class UserCreateComponent implements OnInit {
             data.append('firstname', this._user.Firstname);
             data.append('lastname', this._user.Lastname);
             data.append('days_enabled', this._user.DaysEnabled.toString());
-            data.append('enabled', this._user.Enabled ? '1' : '0');
 
 
             this._httpRequestService.postWithCredentials('http://localhost:8080/user/saveUser', data)
@@ -224,6 +228,41 @@ export class UserCreateComponent implements OnInit {
         else {
             this.ResponseEnable = 'WARNING';
         }
+    }
+
+    getRolesData() {
+        this.RolesOptions = {
+            dropdownAutoWidth: false,
+            width: '100%',
+            allowClear: false,
+            multiple: true,
+            placeholder: {
+                id: -1,
+                text: 'Roles'
+            }
+        };
+
+        let url: string = 'http://localhost:8080/role/getAllRoles'
+        this._httpRequestService.getWithCredentials(url)
+            .subscribe(
+                data => {
+                    let _data = JSON.parse(data._body);
+                    let array: any[] = [];
+                    
+                    _data.forEach(obj => {
+                        let _obj = {
+                            id: obj.role_id,
+                            text: obj.description
+                        };
+
+                        array.push(_obj);
+                    });
+
+                    this.Roles = array;
+                },
+                error => console.log(error),
+                () => console.log('Request Finished')
+            );
     }
 
     generatePassword() {

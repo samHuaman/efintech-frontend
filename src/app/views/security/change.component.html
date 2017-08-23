@@ -19,6 +19,8 @@
             <div class="form-group">
                 <input class="form-control" type="password" placeholder="New Password"
                     [formControl]="changeForm.controls['NewPassword']" [(ngModel)]="NewPassword" [readonly]="ResponsePost=='SUCCESS'">
+                <ng2-password-strength-bar [passwordToCheck]="NewPassword" [barLabel]="barLabel">                    
+                </ng2-password-strength-bar>
             </div>
             <div class="form-group">
                 <input class="form-control" type="password" placeholder="Confirm Password"

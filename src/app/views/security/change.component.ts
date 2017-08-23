@@ -17,6 +17,8 @@ declare var jQuery:any;
 
 export class ChangePasswordComponent implements OnDestroy, OnInit {
 
+    public barLabel: string = "Password strength:";
+
     changeForm: FormGroup;
 
     Username: string;
@@ -29,10 +31,13 @@ export class ChangePasswordComponent implements OnDestroy, OnInit {
                 private _httpRequestService: HttpRequestService,
                 private router: Router,
                 private _login: LoginComponent) {
+        let passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
         this.changeForm = formBuilder.group({
             Username: [null, Validators.required],
             OldPassword: [null, Validators.required],
-            NewPassword: [null, Validators.required],
+            NewPassword: [null, Validators.compose([Validators.required,
+                                                    Validators.pattern(passRegex)])],
             ConfirmPassword: [null, Validators.required]
         },
         {

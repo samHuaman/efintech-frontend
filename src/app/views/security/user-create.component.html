@@ -94,11 +94,11 @@
                                         [formControl]="createForm.controls['DaysEnabled']" [(ngModel)]="_user.DaysEnabled" name="daysenabled">
                                 </div>
                             </div>
-                            <div class="form-group" *ngIf="!isCreate()">
-                                <label class="control-label col-md-3">Habilitado</label>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Roles</label>
                                 <div class="col-md-9">
-                                    <input class="form-control" class="icheck" type="checkbox"
-                                        [formControl]="createForm.controls['Enabled']" [(ngModel)]="_user.Enabled" name="enabled">
+                                    <select2 [data]="Roles" [options]="RolesOptions">
+                                    </select2>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -63,7 +63,7 @@ export class MyDataTablesAjaxComponent implements OnInit, OnChanges {
                 url: this.url,
                 type: 'GET',
                 data: (data) => {
-                    let _filter = JSON.stringify(this.filter);
+                    let _filter = this.filter || { };
                     let _order = $.map(data.order, (item) => {
                         return {
                             Property: data.columns[item.column].name,
@@ -76,8 +76,12 @@ export class MyDataTablesAjaxComponent implements OnInit, OnChanges {
                     delete data.search;
                     delete data.filter;
 
-                    data = this.filter;
-                    /* data.orderBy = _order; */
+                    data.draw = data.draw;
+                    data.start = data.start;
+                    data.length = data.length;
+
+                    data.filter = _filter;
+                    data.orderBy = _order;
                 }
             },
             columns: this.columns
