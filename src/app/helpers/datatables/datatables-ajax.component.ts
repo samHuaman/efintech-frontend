@@ -76,8 +76,8 @@ export class MyDataTablesAjaxComponent implements OnInit, OnChanges {
                     delete data.search;
                     delete data.filter;
 
-                    data.filter = _filter ? JSON.parse(_filter) : { };
-                    data.orderBy = _order;
+                    data = this.filter;
+                    /* data.orderBy = _order; */
                 }
             },
             columns: this.columns
