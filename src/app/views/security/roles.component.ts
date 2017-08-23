@@ -23,7 +23,7 @@ export class RolesComponent implements OnDestroy, OnInit {
     }
 
     public ngOnInit(): void {
-        this._httpRequestService.getWithCredentials('http://localhost.com:8080/security/roles/list')
+        this._httpRequestService.getWithCredentials('http://localhost:8080/security/roles/list')
             .subscribe((data) => {
                 setTimeout(() => {
                     this.data = JSON.parse(data._body);

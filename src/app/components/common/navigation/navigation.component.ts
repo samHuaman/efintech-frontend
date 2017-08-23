@@ -72,7 +72,7 @@ export class NavigationComponent implements OnInit {
   }
 
   getUserProfile() {
-    return this._httpRequestService.getWithCredentials('http://localhost.com:8080/user/getProfile')
+    return this._httpRequestService.getWithCredentials('http://localhost:8080/user/getProfile')
             .subscribe(
               data => {
                 this.getBody = JSON.parse(data._body);
@@ -86,7 +86,7 @@ export class NavigationComponent implements OnInit {
   }
 
   getUserImage() {
-    this._httpRequestService.getImageWithCredentials('http://localhost.com:8080/user/getImage?username=' + this.Username)
+    this._httpRequestService.getImageWithCredentials('http://localhost:8080/user/getImage?username=' + this.Username)
         .subscribe(
           data => {
             this.imageUrl = data;
@@ -94,7 +94,7 @@ export class NavigationComponent implements OnInit {
   }
 
   async getMenu() {
-    return this._httpRequestService.getWithCredentials('http://localhost.com:8080/navigation/getMenu')
+    return this._httpRequestService.getWithCredentials('http://localhost:8080/navigation/getMenu')
             .subscribe(
               data => {
                 let myArray: any[] = [];

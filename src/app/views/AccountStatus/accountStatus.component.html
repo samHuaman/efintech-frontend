@@ -39,7 +39,7 @@
                              </div>
                              <div class="form-group">
                                 <label style="margin-right: 46px">Dirección</label>
-                                <label class="control-label" style="font-weight: normal !important">Hola Mundo</label>
+                                <label class="control-label" style="font-weight: normal !important">{{_direccion}}</label>
                              </div>
                           </div>
                           <div class="col-sm-5 col-md-offset-1">
@@ -49,11 +49,11 @@
                              </div>
                              <div class="form-group">
                                 <label style="margin-right: 30px">Cuenta Corriente</label>
-                                <label class="control-label" style="font-weight: normal !important">Hola Mundo</label>
+                                <label class="control-label" style="font-weight: normal !important">{{_accountNumber}}</label>
                              </div>
                              <div class="form-group">
                                 <label style="margin-right: 84px">Producto</label>
-                                <label class="control-label" style="font-weight: normal !important">Hola Mundo</label>
+                                <label class="control-label" style="font-weight: normal !important">{{_accountProduct}}</label>
                              </div>
                           </div>
                        </div>
@@ -115,7 +115,7 @@
                                    </div>
                                 </iboxindex>
                              </div>
-                             <mydatatables-ajax #dt [url]="_accountStatusURL" [columns]="_accountStatusCoulumns">
+                             <mydatatables-ajax #dt [url]="_quotaURL" [columns]="_quotaColumns">
                              </mydatatables-ajax>
                           </div>
                        </div>

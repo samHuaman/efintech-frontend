@@ -22,7 +22,7 @@ export class TopNavbarComponent {
 
   logout() {
     console.log('Logout...........................');
-    return this._httpRequestService.get('http://localhost.com:8080/logout')
+    return this._httpRequestService.get('http://localhost:8080/logout')
             .subscribe(
               data => {
                 console.log(data._body);
