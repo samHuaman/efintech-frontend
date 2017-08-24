@@ -1,16 +1,16 @@
 <div class="col-lg-12">
   <iboxindex #ibox>
     <div class="custom-ibox-tools">
-      <my-dropdown *ngIf="ShowDropdown==true">
+      <!-- <my-dropdown *ngIf="ShowDropdown==true">
         <ul class="dropdown-menu dropdown-menu-right dopdown-list">
           <li>
             <a (click)="onShow(); _data_account=true">Ver Detalles</a>
           </li>
-          <!-- <li>
+           <li>
             <a (click)="_data_account=true; _accountSelected.account_id; ShowDropdown=false">Ver Estado de Cuenta</a>
-          </li> -->
+          </li> 
         </ul> 
-      </my-dropdown>
+      </my-dropdown> -->
       <a class="close-link">
           <i class="fa fa-refresh" (click)="dt.onReload()"></i>
       </a>
@@ -20,9 +20,9 @@
     <div class="col-lg-12" style="position: relative">
       <mydatatables-ajax #dt [url]="_accountsURL" [filter]="filter" [columns]="_accountColumns" (key)="onShowDropdown($event)">                  
       </mydatatables-ajax>
-      <div class="hr-line-dashed" *ngIf="_data_account==true"></div>
+      <div class="hr-line-dashed"></div>
     </div>
-    <div class="account_data">
+    <div class="account_data" *ngIf="_data_account==false">
       <div class="col-sm-3">
         <div class="form-group">
           <label>Tipo de Cliente</label>
@@ -172,15 +172,15 @@
         </div>
         <div class="form-group">
           <!-- <button class="btn btn-primary" *ngIf="_edit_data==false" (click)="_edit_data=true">Editar</button> -->
-          <button class="btn btn-white pull-right" *ngIf="_edit_data==false" (click)="onHide(); _data_account=false">Ocultar</button>
+          <!-- <button class="btn btn-white pull-right" *ngIf="_edit_data==false" (click)="onHide(); _data_account=false">Ocultar</button>
 
           <button class="btn btn-primary" *ngIf="_edit_data==true" (click)="_edit_data=false; accountDetailSave();">Guardar</button>
-          <button class="btn btn-white" *ngIf="_edit_data==true" (click)="_edit_data=false">Cancelar</button>
+          <button class="btn btn-white" *ngIf="_edit_data==true" (click)="_edit_data=false">Cancelar</button> -->
         </div>
       </div>
     </div>
     <div class="col-sm-12">
-      <div class="hr-line-dashed" *ngIf="_data_account==true"></div>
+      <div class="hr-line-dashed"></div>
       <div class="col-sm-6">
         <div class="form-group">
             <label>Cuotas Pendientes</label>
