@@ -74,17 +74,32 @@ export class DetailMassiveChargeComponent implements OnInit {
 
     private post() {
         if (this.fileReader.result) {
+            this.alerts.push({
+                type: 'info',
+                msg:`<strong>Eviado!</strong> El archivo se ha enviado exitosamente. Vaya a la ventana "Solicitudes" para ver el estado de la solicitud de proceso.`,
+                timeout: 10000
+            });
+
             this._http.postFileWithCredentials('http://localhost:8080/massive-charge/postFile',
                     ['type_alias', this.FileType], this.file)
                 .subscribe(
                     data => {
                         let res = JSON.parse(data);
 
+                        this.alerts = [];
+
                         setTimeout(() => {
                             if (res.statusCode == 200) {
                                 this.alerts.push({
                                     type: 'success',
-                                    msg:`<strong>Procesado!</strong> El archivo se ha enviado exitosamente.`,
+                                    msg:`<strong>Procesado!</strong> El archivo se ha procesado exitosamente.`,
+                                    timeout: 6000
+                                });
+                            }
+                            else if (res.statusCode == 400) {
+                                this.alerts.push({
+                                    type: 'warning',
+                                    msg:`<strong>Proceso con errores!</strong> La estructura del archivo enviado no coincide con la del tipo seleccionado.`,
                                     timeout: 6000
                                 });
                             }

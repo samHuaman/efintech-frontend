@@ -1,0 +1,46 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Solicitud</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>Solicitudes</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <iboxindex #ibox>
+                        <div class="custom-ibox-tools"> 
+                        <my-dropdown *ngIf="ShowDropdown==true">
+                            <ul class="dropdown-menu dropdown-menu-right dopdown-list">
+                                <li>
+                                    <a>Ver Detalle</a>
+                                </li>
+                            </ul> 
+                        </my-dropdown>                                 
+                        <a class="filter" (click)="ibox.colapseFilter($event)">
+                            <i class="fa fa-filter"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-refresh" (click)="dt.onReload()"></i>
+                        </a>
+                        </div>
+                    </iboxindex>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12" style="position: relative">
+                            <mydatatables-ajax #dt [url]="url" [filter]="filter" [columns]="columns" (key)="onShowDropdown($event)">                  
+                            </mydatatables-ajax>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

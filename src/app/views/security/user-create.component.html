@@ -97,7 +97,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Roles</label>
                                 <div class="col-md-9">
-                                    <select2 [data]="Roles" [options]="RolesOptions">
+                                    <select2 [data]="Roles" [options]="RolesOptions" [value]="UserRoles" (valueChanged)="onChangeRoles($event)">
                                     </select2>
                                 </div>
                             </div>

@@ -21,7 +21,8 @@ import { MaintenanceModule } from './views/maintenance/maintenance.module';
 import { MassiveChargesModule } from './views/massive-files-charges/massive-files-charges.module';
 import { AccountModule } from './views/accounts/accounts.module';
 import { WarrantyModule } from './views/warrantys/warrantys.module';
-import {AccountStatusModule } from './views/AccountStatus/accountStatus.module';
+import { AccountStatusModule } from './views/AccountStatus/accountStatus.module';
+import { RequestsModule } from './views/requests/requests.module';
 
 
 
@@ -60,7 +61,8 @@ import { DynamicModule } from './helpers/dynamic/dynamic.module';
     MassiveChargesModule,
     AccountModule,
     WarrantyModule,
-    AccountStatusModule
+    AccountStatusModule,
+    RequestsModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

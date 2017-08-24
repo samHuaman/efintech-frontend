@@ -51,6 +51,8 @@ export class UserCreateComponent implements OnInit {
 
     Roles: Array<Select2OptionData> = [];
     RolesOptions: Select2Options;
+    UserRoles: any[];
+    SelectedRoles: any[];
 
     createForm: FormGroup;
 
@@ -86,57 +88,28 @@ export class UserCreateComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private _userService: UserService) {
-       this._httpRequestService.progress$.subscribe(
-           data => {
-               console.log('progress = ' + data);
-           }
-       );
+        this._httpRequestService.progress$.subscribe(
+            data => {
+                console.log('progress = ' + data);
+            }
+        );
+
+        this.sub = this.route.params.subscribe(params => {
+            this.username = params['username'];
+        });
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
-            this.username = params['username'];
-
-            if (this.username != null || this.username != '') {
-                this._httpRequestService.getWithCredentials('http://localhost:8080/user/getUserByName?username=' + this.username)
-                    .subscribe(
-                        data => {
-                            let _data: any = data._body ? JSON.parse(data._body) : { };
-
-                            this._user = {
-                                UserId: _data.user_id,
-                                Username: _data.username,
-                                Enabled: _data.enabled ? true : false,
-                                ExpireDate: _data.user_expired_date != null ? { 
-                                    date: 
-                                    { 
-                                        year: new Date(_data.user_expired_date).toLocaleDateString().split('/')[2],
-                                        month: new Date(_data.user_expired_date).toLocaleDateString().split('/')[1],
-                                        day: new Date(_data.user_expired_date).toLocaleDateString().split('/')[0]
-                                    },
-                                    formatted: new Date(_data.user_expired_date).toLocaleDateString()
-                                } : null,
-                                Email: _data.email,
-                                Firstname: _data.firstname,
-                                Lastname: _data.lastname,
-                                DaysEnabled: _data.days_enabled,
-                                ConfirmEmail: null,
-                                Password: null,
-                                Image: ''
-                            };
-
-                            if (this._user.Username) {
-                                this.url = 'http://localhost:8080/user/getImage?username=' + this._user.Username;
-                            }
-                        }
-                    )
-            }
-        });
-
+        if (this.username != null || this.username != '') {
+            setTimeout(() => {
+                this.getUser();
+            }, 250);
+        }
+            
         console.log(this.isCreate());
 
         this.createForm = this.formBuilder.group({
-            'Username': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+            'Username': [null, Validators.compose([Validators.required, Validators.minLength(4)])],
             'Firstname': [null, Validators.required],
             'Lastname': [null, null],
             'ExpireDate': [null, null],
@@ -150,6 +123,45 @@ export class UserCreateComponent implements OnInit {
         });
 
         this.getRolesData();
+    }
+
+    getUser() {
+        this._httpRequestService.getWithCredentials('http://localhost:8080/user/getUserByName?username=' + this.username)
+            .subscribe(
+                data => {
+                    let _data: any = data._body ? JSON.parse(data._body) : { };
+
+                    this._user = {
+                        UserId: _data.user_id,
+                        Username: _data.username,
+                        Enabled: _data.enabled ? true : false,
+                        ExpireDate: _data.user_expired_date != null ? { 
+                            date: 
+                            { 
+                                year: new Date(_data.user_expired_date).toLocaleDateString().split('/')[2],
+                                month: new Date(_data.user_expired_date).toLocaleDateString().split('/')[1],
+                                day: new Date(_data.user_expired_date).toLocaleDateString().split('/')[0]
+                            },
+                            formatted: new Date(_data.user_expired_date).toLocaleDateString()
+                        } : null,
+                        Email: _data.email,
+                        Firstname: _data.firstname,
+                        Lastname: _data.lastname,
+                        DaysEnabled: _data.days_enabled,
+                        ConfirmEmail: null,
+                        Password: null,
+                        Image: ''
+                    };
+
+                    this.UserRoles = _data.roles.map((role: any) => role.role_id);
+
+                    if (this._user.Username) {
+                        this.url = 'http://localhost:8080/user/getImage?username=' + this._user.Username;
+                    }
+                },
+                error => console.log(error),
+                () => console.log('Request Finished')
+            );
     }
 
     onDateChanged(event: IMyDateModel) {
@@ -186,7 +198,10 @@ export class UserCreateComponent implements OnInit {
             data.append('firstname', this._user.Firstname);
             data.append('lastname', this._user.Lastname);
             data.append('days_enabled', this._user.DaysEnabled.toString());
-
+            
+            this.SelectedRoles.forEach(key => {
+                data.append('_roles', key.role_id);
+            });
 
             this._httpRequestService.postWithCredentials('http://localhost:8080/user/saveUser', data)
                 .subscribe(
@@ -293,6 +308,17 @@ export class UserCreateComponent implements OnInit {
                     err => {
                         this.ResponseImage = err;
                     });
+        }
+    }
+
+    onChangeRoles(event: any) {
+        if (event.value.length > 0) {
+            this.SelectedRoles = event.value.map((_role: any) => ({
+                role_id: _role
+            }));
+        }
+        else {
+            this.SelectedRoles = [];
         }
     }
 

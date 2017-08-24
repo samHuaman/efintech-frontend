@@ -20,6 +20,7 @@ import {ClientsComponent} from './views/clients/clients.component';
 import {AllProductsComponent} from './views/maintenance/all-products.component';
 import {SpendingTypeComponent} from './views/maintenance/spending-type.component';
 import {DetailMassiveChargeComponent} from './views/massive-files-charges/detail-massive-charge.component';
+import {RequestsComponent} from './views/requests/requests.component';
 
 import {BlankLayoutComponent} from "./components/common/layouts/blankLayout.component";
 import {BasicLayoutComponent} from "./components/common/layouts/basicLayout.component";
@@ -54,6 +55,12 @@ export const ROUTES:Routes = [
       {path: 'roles', component: RolesComponent, canActivate: [AuthGuard]},
       {path: 'user', component: UsersComponent, canActivate: [AuthGuard]},
       {path: 'user-create/:username', component: UserCreateComponent, canActivate: [AuthGuard]},
+    ]
+  },
+  {
+    path: 'solicitudes', component: BasicLayoutComponent,
+    children: [
+      {path: '', component: RequestsComponent, canActivate: [AuthGuard]}
     ]
   },
   {
