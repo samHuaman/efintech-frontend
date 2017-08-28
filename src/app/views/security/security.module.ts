@@ -9,6 +9,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { Select2Module } from 'ng2-select2';
 import { LaddaModule } from 'angular2-ladda';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { ModalModule } from 'ngx-bootstrap';
 /*import { DataTablesModule } from 'angular-datatables';*/
 
 import { RolesComponent } from "./roles.component";
@@ -68,7 +69,8 @@ import { IboxtoolsModule } from '../../components/common/iboxtools/iboxtools.mod
     MyDropdownModule,    
     DropdownModule,
     AppviewsModule,
-    PasswordStrengthBarModule
+    PasswordStrengthBarModule,
+    ModalModule.forRoot()
   ],
   exports: [
     RolesComponent,
