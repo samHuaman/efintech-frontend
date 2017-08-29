@@ -19,7 +19,7 @@ declare var jQuery: any;
 
 export class UsersComponent implements OnInit {
 
-    public filter: Object = { };
+    public filter: any = { };
     public url: string;
     public columns: any[];
 

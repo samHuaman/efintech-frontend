@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 
 import { FlotChartDirective } from '../../components/charts/flotChart';
-
 import { HttpRequestService } from '../../services/httprequest.service';
+
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 declare var jQuery:any;
 
@@ -12,36 +13,55 @@ declare var jQuery:any;
 })
 
 export class RolesComponent implements OnDestroy, OnInit {
-    public data;
-    public filterQuery = '';
-    public rowsOnPage = 10;
-    public sortBy = 'descripcion';
-    public sortOrder = 'asc';
 
-    public constructor(private _httpRequestService: HttpRequestService) {
+    public modalRef: BsModalRef;
+    
+    public filter: any = { };
+    public url: string;
+    public columns: any[];
+
+    public ShowDropdown: boolean = false;
+    public SelectedRole: any = {};
+
+    constructor(private modalService: BsModalService) {
 
     }
 
     public ngOnInit(): void {
-        this._httpRequestService.getWithCredentials('http://localhost:8080/security/roles/list')
-            .subscribe((data) => {
-                setTimeout(() => {
-                    this.data = JSON.parse(data._body);
-                    console.log('Request Finished');
-                }, 1000);
-            });
-    }
-
-    public toInt(num: string) {
-        return +num;
-    }
-
-    public sortByWordLength = (a: any) => {
-        return a.city.length;
+        this.url = 'http://localhost:8080/role/getRoleDataTable';
+        this.columns = [
+            { 
+                title: 'Id', 
+                data: 'role_id'
+            },
+            { 
+                title: 'Descripción', 
+                data: 'description'
+            },
+            {
+                title: 'Alias', 
+                data: 'alias'
+            }
+        ];
     }
 
     public ngOnDestroy(): any {
 
+    }
+
+    public openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    public onShowDropdown(event: any) {
+        if (event) {
+            this.SelectedRole = event;
+            this.ShowDropdown = true;
+        }
+        else {
+            this.SelectedRole = null;
+            this.ShowDropdown = false;
+        }
     }
 
 }
