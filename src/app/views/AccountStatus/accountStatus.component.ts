@@ -133,18 +133,18 @@ export class AccountStatusComponent implements OnInit, OnChanges {
          }
 
         this.quotaId=1;
-        this._quotaURL = 'http://localhost:8080/accountStatus/getQuotaDataTableByScheduleId?scheduleId=' + this.quotaId;
+        this._quotaURL = 'http://localhost:8080/accountStatus/getFeeDataTableByScheduleId?schedule_id=' + this.quotaId;
         this._quotaColumns = [
             {
                 title: 'Nro. Cuota',
-                data: 'quota_id',
-                name: 'quota_id',
+                data: 'fee_number',
+                name: 'fee_number',
                 responsivePriority: 1
             },
             {
                 title: 'Fec. Vencimiento',
-                data: 'due_date',
-                name: 'due_date',
+                data: 'expiration_date',
+                name: 'expiration_date',
                 responsivePriority: 2,
                 render: function (data, tye, full, meta) {
                                 let _date = new Date(data).toLocaleDateString();
@@ -159,20 +159,20 @@ export class AccountStatusComponent implements OnInit, OnChanges {
             },
             {
                 title: 'Interes compensatorio',
-                data: 'compensatory',
-                name: 'compensatory',
+                data: 'compensatory_interest',
+                name: 'compensatory_interest',
                 responsivePriority: 4
             },
             {
                 title: 'Interes moratorio',
-                data: 'arrears',
-                name: 'arrears',
+                data: 'arrears_interest',
+                name: 'arrears_interest',
                 responsivePriority: 5
             },
             {
                 title: 'Portes',
-                data: 'postages',
-                name: 'postages',
+                data: 'monthly_commissions',
+                name: 'monthly_commissions',
                 responsivePriority: 6
             },
             {
@@ -183,14 +183,14 @@ export class AccountStatusComponent implements OnInit, OnChanges {
             },
             {
                 title: 'Seguro Desgravamen',
-                data: 'insurance',
-                name: 'insurance',
+                data: 'disgrace_insurance',
+                name: 'disgrace_insurance',
                 responsivePriority: 8
             },
             {
                 title: 'Otros seguros',
-                data: 'o_insurances',
-                name: 'o_insurances',
+                data: 'other_insurance',
+                name: 'other_insurance',
                 responsivePriority: 9
             },
             {
