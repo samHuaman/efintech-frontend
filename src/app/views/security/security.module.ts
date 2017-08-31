@@ -24,6 +24,7 @@ import { ModalComponent } from '../../components/common/modal/modal.component';
 import { MyDropdownModule } from '../../components/common/dropdown/dropdown.module';
 import { MyDataTablesModule } from '../../helpers/datatables/datatables.module';
 import { AppviewsModule } from '../appviews/appviews.module';
+import { RolesMaintenance } from './roles-maintenance.component';
 
 import { DataFilterPipe } from '../../helpers/data-filter.pipe';
 
@@ -44,7 +45,8 @@ import { IboxtoolsModule } from '../../components/common/iboxtools/iboxtools.mod
     ResetPasswordComponent,
     UserCreateComponent,
     DataFilterPipe,
-    EnableDisableUsersComponent
+    EnableDisableUsersComponent,
+    RolesMaintenance
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ import { IboxtoolsModule } from '../../components/common/iboxtools/iboxtools.mod
     ModalComponent,
     ResetPasswordComponent,
     UserCreateComponent,
-    EnableDisableUsersComponent
+    EnableDisableUsersComponent,
+    RolesMaintenance
   ],
 })
 
