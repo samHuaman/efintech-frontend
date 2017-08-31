@@ -120,7 +120,8 @@ export class MyDataTablesAjaxComponent implements OnInit, OnChanges {
     {        
         if (this.WasViewInitialized) {
             if (this.TableWidget) {
-                this.TableWidget.draw();
+                this.TableWidget.destroy();
+                this.loadData();
             }
 
             return;

@@ -59,7 +59,7 @@ export class ScheduleHistoryComponent implements OnInit, OnChanges {
 
     ngOnChanges() {
 
-    }
+    } 
 
     getOriginalSchedule() {
         let url: string = 'http://localhost:8080/schedule/getOriginalScheduleByAccount?account_id=' + this.accountId;
@@ -74,8 +74,8 @@ export class ScheduleHistoryComponent implements OnInit, OnChanges {
                     this.columns = [
                         {
                             title: 'Nro. Cuota',
-                            data: 'fee_number',
-                            name: 'fee_number',
+                            data: 'sequence',
+                            name: 'sequence',
                             responsivePriority: 0
                         },
                         {
@@ -149,8 +149,13 @@ export class ScheduleHistoryComponent implements OnInit, OnChanges {
             );
     }
 
-    onDateChanged(event: IMyDateModel) {
-        this.filter = { scheduleRegistrationDate: event.formatted };
+    public onDateChanged(event: IMyDateModel) {
+        let params = new URLSearchParams();
+
+        params.append('schedule_id', this.Schedule.schedule_id || '0');
+        params.append('registrationDate', (event.date.month + '/' + event.date.day + '/' + event.date.year).toLocaleString());
+
+        this.url = 'http://localhost:8080/schedule/getFeeDataTable?' + params;
     }
 
 }

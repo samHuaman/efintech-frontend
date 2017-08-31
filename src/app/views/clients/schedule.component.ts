@@ -55,8 +55,8 @@ export class ScheduleComponent implements OnInit, OnChanges {
                     this.columns = [
                         {
                             title: 'Nro. Cuota',
-                            data: 'fee_number',
-                            name: 'fee_number',
+                            data: 'sequence',
+                            name: 'sequence',
                             responsivePriority: 0
                         },
                         {
