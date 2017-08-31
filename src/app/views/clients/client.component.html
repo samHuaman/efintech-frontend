@@ -41,7 +41,7 @@
                         </tab>
                         <tab heading="Garantías" (select)="onSelectTab(5)">
                             <div class="row">
-                                <warranty [clientId]="clientId" *ngIf="Tabs==5"></warranty>
+                                <warranty [clientId]="clientId" [accountId]="accountId" *ngIf="Tabs==5"></warranty>
                             </div>
                         </tab>
                         <tab heading="Estado de Cuenta" (select)="onSelectTab(6)" [disabled]="accountId==null">

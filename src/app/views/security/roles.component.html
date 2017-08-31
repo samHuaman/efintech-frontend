@@ -1,12 +1,12 @@
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Rol</h2>
-        <ol class="breadcrumb">
-            <li class="active">
-                <strong>Roles</strong>
-            </li>
-        </ol>
-    </div>
+  <div class="col-sm-4">
+    <h2>Rol</h2>
+    <ol class="breadcrumb">
+      <li class="active">
+        <strong>Roles</strong>
+      </li>
+    </ol>
+  </div>
 </div>
 
 <div class="wrapper wrapper-content">
@@ -19,11 +19,11 @@
               <my-dropdown *ngIf="ShowDropdown==true">
                 <ul class="dropdown-menu dropdown-menu-right dopdown-list">
                   <li>
-                    <a>Editar</a>
+                    <a (click)="enabledModal.show(); SN_Create=false">Editar</a>
                   </li>
-                </ul> 
+                </ul>
               </my-dropdown>
-              <a>
+              <a (click)="enabledModal.show(); SN_Create=true" *ngIf="ShowDropdown==false">
                 <i class="fa fa-plus"></i>
               </a>
               <a class="filter" (click)="ibox.colapseFilter($event)">
@@ -31,16 +31,16 @@
               </a>
               <a class="close-link">
                 <i class="fa fa-refresh" (click)="dt.onReload()"></i>
-              </a> 
+              </a>
             </div>
           </iboxindex>
         </div>
         <div class="ibox-content">
           <div id="user-filter" class="form-filter">
-              <form id="filterForm" autocomplete="off">
-                <div class="row">                    
-                </div>
-              </form>
+            <form id="filterForm" autocomplete="off">
+              <div class="row">
+              </div>
+            </form>
             <div class="hr-line-dashed"></div>
           </div>
           <div class="row">
@@ -56,21 +56,54 @@
 </div>
 
 <ng-template #template>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left" *ngIf="SN_Create==true">Crear Rol</h4>
-        <h4 class="modal-title pull-left" *ngIf="SN_Create==false">Editar Rol</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="SN_Create==true">Crear Rol</h4>
+    <h4 class="modal-title pull-left" *ngIf="SN_Create==false">Editar Rol</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
         </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <!-- <roles-maintenance [roleId]="'1'" #maintenance>
+            </roles-maintenance> -->
     </div>
-    <div class="modal-body">
-        <div class="row">
-            <roles-maintenance [roleId]="'1'" #maintenance>
-            </roles-maintenance>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Cerrar</button>
-    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary">Guardar</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Cerrar</button>
+  </div>
 </ng-template>
+
+<app-modal #enabledModal>
+  <div class="app-modal-header">
+    <button type="button" class="close" (click)="enabledModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <h4 class="modal-title pull-left" *ngIf="SN_Create==true">Crear Rol</h4>
+    <h4 class="modal-title pull-left" *ngIf="SN_Create==false">Editar Rol</h4>
+  </div>
+  <div class="app-modal-body">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <div class="col-md-12">
+          <div class="alert alert-success" *ngIf="resetResult=='SUCCESS' && selectedValue==1">User enabled</div>
+          <div class="alert alert-success" *ngIf="resetResult=='SUCCESS' && selectedValue==0">User disabled</div>
+          <div class="alert alert-danger" *ngIf="resetResult=='ERROR'">Error</div>
+          <div class="alert alert-warning" *ngIf="resetResult=='WARNING'">You should write a reason</div>
+        </div>
+        <div class="col-md-12">
+          <label>Descripción</label>
+          <input class="form-control" type="text" placeholder="Descripción" [(ngModel)]="role_detail.description" name="Descripción">
+        </div>
+        <div class="col-md-12">
+          <label>Alias</label>
+          <input class="form-control" type="text" placeholder="Alias" [(ngModel)]="role_detail.alias" name="alias">
+        </div>
+      </div>
+    </div>
+      </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-default" (click)="enabledModal.hide()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="getSaveRole()" *ngIf="SN_Create==false" >Save changes</button>
+      <button type="button" class="btn btn-primary" (click)="getSaveRole2()" *ngIf="SN_Create==true">Save changes2</button>
+    </div>
+</app-modal>

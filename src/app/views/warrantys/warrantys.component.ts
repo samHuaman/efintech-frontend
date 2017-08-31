@@ -24,6 +24,7 @@ export class WarrantyComponent implements OnInit {
 
     //DataTable
     @Input() clientId: any;
+    @Input() accountId: any;
     public _warrantyURL: string;
     public _warrantyCoulumns: any[] = [];
     public _warrantySelected: any;
@@ -86,7 +87,7 @@ export class WarrantyComponent implements OnInit {
     ngOnInit() {
 
         //WarrantyDataTableByClientId
-        this._warrantyURL = 'http://localhost:8080/warranty/getWarrantyDataTableByClientId?clientId=' + this.clientId;
+        this._warrantyURL = 'http://localhost:8080/warranty/getWarrantyDataTableByClientId?clientId=' + this.accountId;
         this._warrantyCoulumns = [
             {
                 title: 'Tipo de Garantía',
@@ -139,7 +140,7 @@ export class WarrantyComponent implements OnInit {
         }
 
         //Monto total
-        this._warrantyTotalURL = 'http://localhost:8080/warranty/getAllWarrantyById?customerId=' + this.clientId;
+        this._warrantyTotalURL = 'http://localhost:8080/warranty/getAllWarrantyById?customerId=' + this.accountId;
         if (this.clientId > 0 && this.clientId != null) {
             this._httpRequestService.getWithCredentials(this._warrantyTotalURL)
                 .subscribe(
