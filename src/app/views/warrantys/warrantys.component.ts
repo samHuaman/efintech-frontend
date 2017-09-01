@@ -90,17 +90,20 @@ export class WarrantyComponent implements OnInit {
         this._warrantyURL = 'http://localhost:8080/warranty/getWarrantyDataTableByClientId?clientId=' + this.accountId;
         this._warrantyCoulumns = [
             {
-                title: 'Tipo de Garantía',
-                data: 'warranty_type_id.ddescription',
-                name: 'warranty_type_id.ddescription',
+                title: 'ID',
+                data: 'warranty_id',
+                name: 'warranty_id',
                 responsivePriority: 1
-            },
+            },            
             {
                 title: 'Tipo de Activo',
-                data: 'assest_type_id.ddescription',
-                name: 'assest_type_id.ddescription',
+                data: 'assest_type_id',
+                name: 'assest_type_id',
+                render: function(data, type, full, meta) { 
+                    return data ? data.ddescription : '-';
+                },
                 responsivePriority: 2
-            },
+            }, 
             {
                 title: 'Descripción',
                 data: 'ddescription',
@@ -108,22 +111,34 @@ export class WarrantyComponent implements OnInit {
                 responsivePriority: 3
             },
             {
-                title: 'Dirección',
-                data: 'aaddress',
-                name: 'aaddress',
+                title: 'Valor Comercial ($)',
+                data: 'commercial_value_dollar',
+                name: 'commercial_value_dollar',
                 responsivePriority: 4
+            },
+            {
+                title: 'Valor Tasación Inicial ($)',
+                data: 'rating_init_dollar',
+                name: 'rating_init_dollar',
+                responsivePriority: 5
+            },
+            {
+                title: 'Valor Degravamen ($)',
+                data: 'assessment_dollar',
+                name: 'assessment_dollar',
+                responsivePriority: 6
             },
             {
                 title: 'Nro. Registro Público',
                 data: 'public_record_number',
                 name: 'public_record_number',
-                responsivePriority: 5
+                responsivePriority: 7
             },
             {
                 title: 'Monto Trasado',
                 data: 'amount_assessed',
                 name: 'amount_assessed',
-                responsivePriority: 6
+                responsivePriority: 8
             }
         ]
 
@@ -133,8 +148,8 @@ export class WarrantyComponent implements OnInit {
             this._httpRequestService.getWithCredentials(this._warrantyClientURL)
                 .subscribe(
                 _data => {
-                    this._warrantyClient = JSON.parse(_data._body);
-                    this._fullName = this._warrantyClient.client.firstname + ' ' + this._warrantyClient.client.secondname + ' ' + this._warrantyClient.client.lastname_a + ' ' + this._warrantyClient.client.lastname_b;
+                    this._warrantyClient = _data.body ? JSON.parse(_data._body): { };
+                    this._fullName = this._warrantyClient.client ? this._warrantyClient.client.firstname + ' ' + this._warrantyClient.client.secondname + ' ' + this._warrantyClient.client.lastname_a + ' ' + this._warrantyClient.client.lastname_b : ' ';
                 }
                 )
         }
@@ -145,7 +160,7 @@ export class WarrantyComponent implements OnInit {
             this._httpRequestService.getWithCredentials(this._warrantyTotalURL)
                 .subscribe(
                 _data => {
-                    this._warrantyTotal = JSON.parse(_data._body);
+                    this._warrantyTotal = _data.body ?  JSON.parse(_data._body) : [];
                     let sumTotal = 0;
                     this._warrantyTotal.forEach(e => {
                         sumTotal += Number(e.amount_assessed);
@@ -180,7 +195,7 @@ export class WarrantyComponent implements OnInit {
             this._httpRequestService.getWithCredentials(this._warrantyDetailURL)
                 .subscribe(
                 _data => {
-                    this._warrantyDetail = JSON.parse(_data._body);
+                    this._warrantyDetail = _data.body ?  JSON.parse(_data._body) : { };
                     this._monto = this._warrantyDetail.amount_assessed;
                 }
                 )
@@ -202,7 +217,7 @@ export class WarrantyComponent implements OnInit {
         this._httpRequestService.getWithCredentials(_warrantyTypeURL)
         .subscribe(
             _data => {
-                let _warrantystypes = JSON.parse(_data._body);
+                let _warrantystypes = _data.body ?  JSON.parse(_data._body) : [];
                 let _warrantysTypesArray: any[] = [];
 
                 _warrantystypes.forEach(e => {
@@ -236,7 +251,7 @@ export class WarrantyComponent implements OnInit {
         this._httpRequestService.getWithCredentials(_assestsTypeURL)
         .subscribe(
             _data => {
-                let _assestsTypes = JSON.parse(_data._body);
+                let _assestsTypes = _data.body ?  JSON.parse(_data._body) : [];
                 let _assestsTypesArray:any [] = [];
 
                 _assestsTypes.forEach(element => {
@@ -272,7 +287,7 @@ export class WarrantyComponent implements OnInit {
         this._httpRequestService.postWithCredentials('http://localhost:8080/warranty/editWarranty', _data)
         .subscribe(
             _data => {
-                let _res = JSON.parse(_data._body);
+                let _res = _data.body ?  JSON.parse(_data._body) : { };
                 setTimeout(() => {
                     this._edit_data = false;
 
